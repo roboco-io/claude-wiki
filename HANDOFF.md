@@ -32,6 +32,7 @@ v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 
 - [x] vitest 단위 테스트(19개, `args`/`headless`/`check-links`) + `scripts/check-links.mjs` 링크 무결성 검사 스크립트
 - [x] **헤드리스 E2E 검증** (Task 7): `node dist/cli.js init`(llm-wiki, this repo 대상) → `wiki/index.md` + 3페이지 + `agentwiki.json`(format/HEAD sha 정확) 생성, `check-links.mjs wiki` → `OK`. `node dist/cli.js update` → 변경 없음 no-op 정확히 감지, 메타데이터 타임스탬프만 갱신. `--format openwiki` → `openwiki/quickstart.md` + 2페이지 + 메타데이터 생성(소규모 리포라 스킬 규칙대로 section dir 없이 flat 구성, 의도된 동작). 생성물은 검증 후 삭제(레포에 커밋 안 함).
 - [x] README 사용법 섹션 작성(설치, 명령어, `--format`, 헤드리스/CI, `agentwiki.json` 계약, no-API-key 설계)
+- [x] **check-links 코드스팬 무시 기능**: 인라인 코드와 펜스드 블록을 사전 스트립하여 위키링크 정규식이 코드 예시를 오인하지 않도록 수정 (commit 03dfadd, 회귀 테스트 3개 추가, 22/22 통과)
 
 ## Next Steps
 
@@ -53,7 +54,7 @@ v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 
 
 ## Pending Items
 
-- **`scripts/check-links.mjs` false positive** (Task 7에서 발견, 미수정): openwiki 형식 문서가 llm-wiki 형식을 설명하며 `` `[[wiki-link]]` `` 같은 인라인 코드 예시를 산문에 쓰면, 체커의 정규식이 이를 실제 깨진 위키링크로 오인한다 (코드 스팬을 구분하지 않음). 생성된 문서 자체는 정확했다 — 체커 로직의 한계다. Task 7 스코프(README/HANDOFF만 수정)라 손대지 않았다. 다음 세션에서 정규식에 백틱 인식을 추가하거나 코드펜스/인라인 코드를 사전에 스트립하는 수정을 검토할 것.
+없음 — 모든 스코프 아이템이 완료되었다. (check-links 코드스팬 무시 기능은 Task 7 이후 commit 03dfadd에서 해결됨.)
 
 ## Resume Cautions
 
