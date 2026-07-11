@@ -1,0 +1,50 @@
+{
+  "name": "agentwiki",
+  "version": "0.1.0",
+  "description": "Generate and maintain agent-friendly codebase wikis using Claude Code — no API key required",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "agentwiki": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "commands",
+    "skills",
+    "agents",
+    ".claude-plugin",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ai",
+    "agents",
+    "documentation",
+    "wiki",
+    "claude-code",
+    "claude-code-plugin",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roboco-io/agentwiki.git"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
+    "dev": "tsx src/cli.ts",
+    "lint": "eslint .",
+    "prebuild": "npm run clean",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.10"
+  }
+}

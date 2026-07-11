@@ -1,0 +1,13 @@
+{
+  "name": "agentwiki",
+  "version": "0.1.0",
+  "description": "Generate and maintain agent-friendly codebase wikis — /agentwiki:init to create, /agentwiki:update to refresh",
+  "author": {
+    "name": "roboco-io",
+    "url": "https://github.com/roboco-io"
+  },
+  "homepage": "https://github.com/roboco-io/agentwiki",
+  "repository": "https://github.com/roboco-io/agentwiki",
+  "license": "MIT",
+  "keywords": ["documentation", "wiki", "agents"]
+}
