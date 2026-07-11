@@ -2,10 +2,11 @@
 /**
  * agentwiki CLI — thin wrapper that drives the locally installed Claude Code
  * CLI (`claude -p`) in headless mode. All wiki-generation logic lives in the
- * plugin's commands and skills so it runs under the user's Claude
- * subscription; this wrapper only handles argument parsing and process
- * orchestration.
+ * plugin's skill markdown so it runs under the user's Claude subscription;
+ * this wrapper only handles argument parsing and process orchestration.
  */
+import { parseArgs } from "./args.js";
+import { runHeadless } from "./headless.js";
 
 const HELP = `agentwiki — agent-friendly codebase wikis via Claude Code
 
@@ -15,20 +16,25 @@ Usage:
   agentwiki --help                              Show this help
 `;
 
-function main(): void {
-  const [command] = process.argv.slice(2);
+async function main(): Promise<void> {
+  const parsed = parseArgs(process.argv.slice(2));
 
-  switch (command) {
-    case "init":
-    case "update":
-      // TODO(implementation): spawn `claude -p` with the corresponding
-      // plugin command and stream output.
-      console.error(`agentwiki ${command}: not implemented yet`);
-      process.exit(1);
-      break;
-    default:
+  switch (parsed.kind) {
+    case "help":
       console.log(HELP);
+      break;
+    case "error":
+      console.error(`agentwiki: ${parsed.message}`);
+      console.error(HELP);
+      process.exit(2);
+      break;
+    case "init":
+      process.exit(await runHeadless("init", parsed.format));
+      break;
+    case "update":
+      process.exit(await runHeadless("update"));
+      break;
   }
 }
 
-main();
+await main();
