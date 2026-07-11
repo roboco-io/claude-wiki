@@ -17,7 +17,7 @@ branch: main
 
 ## In Progress
 
-프로젝트 스켈레톤과 설계/구현 문서까지 완료된 상태. 실제 구현(스킬 프롬프트 본문, CLI 래퍼 로직)은 아직 시작하지 않았다. 모든 commands/skills/src 파일은 TODO 스텁이다.
+v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 19+ 유닛 테스트, 헤드리스 E2E(두 형식) 검증 완료. npm publish + marketplace 등록 + 인터랙티브 플러그인 E2E만 남았다 (모두 사용자 계정/인터랙티브 세션 필요).
 
 ## Completed Steps
 
@@ -26,16 +26,18 @@ branch: main
 - [x] 리포지토리 생성·푸시: https://github.com/roboco-io/agentwiki (public, 로컬: `~/Workspace/opensource/agentwiki`)
 - [x] 스켈레톤 커밋: plugin manifest, 명령 스텁 2개, 스킬 스텁, CLI 스텁, CI 예시, tsconfig/package.json
 - [x] 문서화: `docs/DESIGN.md`(아키텍처 결정), `docs/IMPLEMENTATION.md`(제약사항·컴포넌트·형식 스펙·검증 항목)
+- [x] **`skills/wiki-generation/SKILL.md` 본문 작성** — run discipline, git discipline, 두 형식의 경로/레이아웃 차이, init/update 모드별 워크플로, `agentwiki.json` 스키마.
+- [x] `commands/init.md`, `commands/update.md` 본문 작성 (스킬 위임 + 포맷 인자 파싱)
+- [x] `src/cli.ts` 구현: `args.ts`(파싱) + `headless.ts`(claude 바이너리 감지 → `claude -p` spawn, `stdio: inherit`) + `cli.ts`(엔트리)
+- [x] vitest 단위 테스트(19개, `args`/`headless`/`check-links`) + `scripts/check-links.mjs` 링크 무결성 검사 스크립트
+- [x] **헤드리스 E2E 검증** (Task 7): `node dist/cli.js init`(llm-wiki, this repo 대상) → `wiki/index.md` + 3페이지 + `agentwiki.json`(format/HEAD sha 정확) 생성, `check-links.mjs wiki` → `OK`. `node dist/cli.js update` → 변경 없음 no-op 정확히 감지, 메타데이터 타임스탬프만 갱신. `--format openwiki` → `openwiki/quickstart.md` + 2페이지 + 메타데이터 생성(소규모 리포라 스킬 규칙대로 section dir 없이 flat 구성, 의도된 동작). 생성물은 검증 후 삭제(레포에 커밋 안 함).
+- [x] README 사용법 섹션 작성(설치, 명령어, `--format`, 헤드리스/CI, `agentwiki.json` 계약, no-API-key 설계)
 
 ## Next Steps
 
-- [ ] **`skills/wiki-generation/SKILL.md` 본문 작성** — openwiki의 `src/agent/prompt.ts`(425줄)의 run discipline을 Claude Code 스킬 형식으로 이식. docs/IMPLEMENTATION.md "Generation discipline" 섹션이 요구사항 목록.
-- [ ] `commands/init.md`, `commands/update.md` 본문 작성 (스킬 위임 + `agentwiki.json` 메타데이터 read/write)
-- [ ] 헤드리스 모드 검증: docs/IMPLEMENTATION.md의 "To verify" 체크리스트 3개 (플러그인 헤드리스 로딩 방법이 최대 리스크 — 안 되면 CLI가 프롬프트를 `-p`에 직접 인라인하는 폴백 사용)
-- [ ] `src/cli.ts` 구현: claude 바이너리 감지 → `claude -p` spawn → 출력 스트리밍
-- [ ] 소규모 실제 리포에서 `/agentwiki:init` E2E 테스트 (두 형식 모두)
-- [ ] vitest 단위 테스트 + 링크 무결성 검사 스크립트
-- [ ] npm 배포 + roboco-io 마켓플레이스 등록
+- [ ] **인터랙티브 플러그인 E2E** (사용자 수동 실행 필요): `claude --plugin-dir /Users/dohyunjung/Workspace/opensource/agentwiki` 세션에서 `/agentwiki:init` 실행 → 슬래시 메뉴에 명령이 나타나는지, 헤드리스 실행과 동일하게 `wiki/`가 생성되는지 확인. Task 7에서는 인터랙티브 세션을 서브에이전트가 구동할 수 없어 생략함.
+- [ ] npm 배포 (`npm publish`, 사용자 npm 계정 필요)
+- [ ] roboco-io 마켓플레이스 등록
 
 ## Key Context
 
@@ -47,17 +49,13 @@ branch: main
 
 ## Files Being Edited
 
-없음 — 모든 변경 커밋 완료 (working tree clean 상태로 핸드오프).
-
-- 다음에 열 파일: `skills/wiki-generation/SKILL.md` (TODO 스텁)
-- 이식 소스: `~/Workspace/opensource/openwiki/src/agent/prompt.ts`
+없음 — 모든 변경 커밋 완료 (working tree clean 상태로 핸드오프). Task 7의 E2E 산출물(`wiki/`, `openwiki/`)은 검증 후 삭제했으며 커밋되지 않았다.
 
 ## Pending Items
 
-- 없음. 사용자 확인 대기 사항 없음.
+- **`scripts/check-links.mjs` false positive** (Task 7에서 발견, 미수정): openwiki 형식 문서가 llm-wiki 형식을 설명하며 `` `[[wiki-link]]` `` 같은 인라인 코드 예시를 산문에 쓰면, 체커의 정규식이 이를 실제 깨진 위키링크로 오인한다 (코드 스팬을 구분하지 않음). 생성된 문서 자체는 정확했다 — 체커 로직의 한계다. Task 7 스코프(README/HANDOFF만 수정)라 손대지 않았다. 다음 세션에서 정규식에 백틱 인식을 추가하거나 코드펜스/인라인 코드를 사전에 스트립하는 수정을 검토할 것.
 
 ## Resume Cautions
 
-- openwiki 프롬프트를 이식할 때 **connector/personal 모드 관련 지침은 제외**할 것 (스코프 아웃).
 - `gh repo create`는 이미 실행됨 — 재실행 금지.
-- superpowers 워크플로우 기준으로는 brainstorming 후 정식 spec 승인 → writing-plans 단계가 생략된 상태 (사용자가 "진행시켜"로 단축 지시). 본격 구현 전 superpowers:writing-plans로 구현 계획을 세우는 것을 권장.
+- 인터랙티브 플러그인 E2E(`claude --plugin-dir . ` → `/agentwiki:init`)는 아직 아무도 실행하지 않았다 — 다음 세션 또는 사용자가 수동으로 확인해야 한다.
