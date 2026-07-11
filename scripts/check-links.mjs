@@ -9,6 +9,17 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 
+/**
+ * Strip fenced code blocks and inline code spans so link patterns mentioned
+ * as prose examples (e.g. `[[wiki-link]]` inside backticks) aren't treated
+ * as real links. Replaces stripped regions with spaces to preserve offsets.
+ */
+function stripCode(text) {
+  return text
+    .replace(/```[\s\S]*?```/g, (m) => " ".repeat(m.length))
+    .replace(/`[^`\n]*`/g, (m) => " ".repeat(m.length));
+}
+
 function mdFiles(dir) {
   const out = [];
   for (const entry of readdirSync(dir)) {
@@ -25,7 +36,7 @@ export function checkWiki(root) {
   const slugs = new Map(pages.map((p) => [basename(p, ".md"), p]));
 
   for (const page of pages) {
-    const text = readFileSync(page, "utf8");
+    const text = stripCode(readFileSync(page, "utf8"));
 
     for (const [, slug] of text.matchAll(/\[\[([^\]|#]+?)(?:[|#][^\]]*)?\]\]/g)) {
       if (!slugs.has(slug.trim())) {
@@ -43,7 +54,7 @@ export function checkWiki(root) {
 
   const index = join(root, "index.md");
   if (existsSync(index)) {
-    const text = readFileSync(index, "utf8");
+    const text = stripCode(readFileSync(index, "utf8"));
     for (const [slug, path] of slugs) {
       if (slug === "index") continue;
       const linked =

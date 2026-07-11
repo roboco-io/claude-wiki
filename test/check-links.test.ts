@@ -35,6 +35,31 @@ describe("checkWiki (llm-wiki format)", () => {
     });
     expect(checkWiki(dir).some((e) => e.includes("orphan"))).toBe(true);
   });
+
+  it("does not flag [[wiki-link]] syntax mentioned in an inline code span", () => {
+    const dir = makeWiki({
+      "index.md":
+        "# Index\nThe llm-wiki format uses `[[not-a-real-page]]` syntax for cross-links.",
+    });
+    expect(checkWiki(dir).some((e) => e.includes("BROKEN"))).toBe(false);
+  });
+
+  it("does not flag [[links]] or ](target.md) inside a fenced code block", () => {
+    const dir = makeWiki({
+      "index.md":
+        "# Index\n\n```\nExample: [[also-fake]] and [link](fake/path.md)\n```\n",
+    });
+    expect(checkWiki(dir).some((e) => e.includes("BROKEN"))).toBe(false);
+  });
+
+  it("still flags a real [[missing-page]] link outside of code", () => {
+    const dir = makeWiki({
+      "index.md": "# Index\nSee [[missing-page]] for details.",
+    });
+    expect(checkWiki(dir).some((e) => e.includes("BROKEN") && e.includes("missing-page"))).toBe(
+      true,
+    );
+  });
 });
 
 describe("checkWiki (openwiki format)", () => {
