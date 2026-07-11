@@ -23,7 +23,7 @@ branch: main
 
 - [x] 브레인스토밍으로 방향 확정: 하이브리드(플러그인 + CLI), code 모드만, 출력 형식 2종(`llm-wiki` 기본 / `openwiki`)
 - [x] **핵심 제약 발견**: Claude Agent SDK는 구독 인증을 정책상 금지 → 플러그인 + `claude -p` 헤드리스 래퍼 구조로 전환 (근거: docs/DESIGN.md)
-- [x] 리포지토리 생성·푸시: https://github.com/roboco-io/agentwiki (public, 로컬: `~/Workspace/roboco-io/tools/agentwiki`)
+- [x] 리포지토리 생성·푸시: https://github.com/roboco-io/agentwiki (public, 로컬: `~/Workspace/opensource/agentwiki`)
 - [x] 스켈레톤 커밋: plugin manifest, 명령 스텁 2개, 스킬 스텁, CLI 스텁, CI 예시, tsconfig/package.json
 - [x] 문서화: `docs/DESIGN.md`(아키텍처 결정), `docs/IMPLEMENTATION.md`(제약사항·컴포넌트·형식 스펙·검증 항목)
 
