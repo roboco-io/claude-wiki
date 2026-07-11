@@ -28,6 +28,8 @@ Then inside any repository:
 
 ### As a CLI
 
+> **Not yet published.** The `agentwiki` npm package and the `agentwiki@roboco-io` plugin marketplace entry are not live yet. Until then, install from source (`npm install && npm run build && npm link`) or run the plugin from a local checkout with `--plugin-dir`.
+
 ```sh
 npm install -g agentwiki
 
@@ -68,7 +70,7 @@ agentwiki update
 
 The CLI shells out to your local `claude` binary in headless mode (`claude -p`), so it needs the Claude Code CLI installed and authenticated:
 
-- **Locally**: log in once with `claude login`; `agentwiki` reuses that session.
+- **Locally**: log in once by running `claude` and using the `/login` slash command; `agentwiki` reuses that session.
 - **In CI**: generate a long-lived OAuth token with `claude setup-token` (works with a Claude Pro/Max subscription, no API key), store it as a secret, and export it as `CLAUDE_CODE_OAUTH_TOKEN`. See [`examples/agentwiki-update.yml`](./examples/agentwiki-update.yml) for a complete GitHub Actions workflow that installs `@anthropic-ai/claude-code` + `agentwiki`, runs `agentwiki update` on a schedule, and opens a PR with the changes.
 
 ```sh
@@ -95,12 +97,16 @@ Every generated wiki root (`wiki/` or `openwiki/`) contains an `agentwiki.json` 
 
 All wiki-generation intelligence runs as Claude Code skill/command prompts executed by your local `claude` binary, so token usage is covered by your Claude Pro/Max subscription instead of a separate Anthropic API key.
 
+## Security model
+
+The headless CLI (`agentwiki init` / `agentwiki update`) runs `claude -p` with `--permission-mode acceptEdits`, granting the Write and Edit tools without per-file confirmation. The rule that writes stay under the wiki root (`wiki/` or `openwiki/`) is enforced by the skill's prompt instructions, not by OS-level sandboxing — a sufficiently adversarial repository could in principle induce writes elsewhere. Repository content (source, docs, commit messages) is also fed to the model as input. Only run AgentWiki on repositories you trust, and review generated wiki changes (e.g. the PR opened by the example CI workflow) before merging.
+
 ## Development
 
 ```sh
-pnpm install
-pnpm build
-pnpm test
+npm install
+npm run build
+npm test
 ```
 
 See [docs/DESIGN.md](./docs/DESIGN.md) for architecture decisions.

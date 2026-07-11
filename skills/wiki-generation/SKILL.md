@@ -85,7 +85,7 @@ Format-dependent paths:
 
 ## Mode: init
 
-1. Preconditions: confirm the working directory is a git repository (`git rev-parse --is-inside-work-tree`). If `<wiki-root>/agentwiki.json` already exists, stop and tell the user to run `/agentwiki:update` instead (or delete the wiki root to force a rebuild).
+1. Preconditions: confirm the working directory is a git repository (`git rev-parse --is-inside-work-tree`). If `agentwiki.json` already exists in **either** `wiki/` or `openwiki/` (not just the chosen format's root), stop and tell the user to run `/agentwiki:update` instead (or delete the existing wiki root to force a rebuild).
 2. Build a repository inventory first: existing docs, entrypoints, package/config files, major domain folders, tests, data/schema files, operational scripts.
 3. Use git evidence to understand how important files and workflows came to be (recent commits, targeted blame/show on high-signal files).
 4. If the repository already has substantial docs, make the wiki an opinionated map and synthesis layer over them.

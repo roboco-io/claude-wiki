@@ -15,6 +15,7 @@
     "commands",
     "skills",
     "agents",
+    "scripts",
     ".claude-plugin",
     "README.md",
     "LICENSE"

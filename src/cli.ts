@@ -29,11 +29,23 @@ async function main(): Promise<void> {
       process.exit(2);
       break;
     case "init":
-      process.exit(await runHeadless("init", parsed.format));
+      process.exit(await runOrExit("init", parsed.format));
       break;
     case "update":
-      process.exit(await runHeadless("update"));
+      process.exit(await runOrExit("update"));
       break;
+  }
+}
+
+async function runOrExit(
+  kind: "init" | "update",
+  format?: Parameters<typeof runHeadless>[1],
+): Promise<number> {
+  try {
+    return await runHeadless(kind, format);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : String(err));
+    return 1;
   }
 }
 

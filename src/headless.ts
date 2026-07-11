@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import type { Format } from "./args.js";
 
 const ALLOWED_TOOLS =
-  "Read,Glob,Grep,Write,Edit,Bash(git:*),Bash(rg:*),Bash(date:*)";
+  "Read,Glob,Grep,Write,Edit,Task,Bash(git:*),Bash(rg:*),Bash(rm:*),Bash(date:*)";
 
 /** Package root = parent of the directory holding this module (src/ or dist/). */
 export function packageRoot(): string {
@@ -14,7 +14,12 @@ export function packageRoot(): string {
 
 function skillBody(): string {
   const path = join(packageRoot(), "skills", "wiki-generation", "SKILL.md");
-  const raw = readFileSync(path, "utf8");
+  let raw: string;
+  try {
+    raw = readFileSync(path, "utf8");
+  } catch (err) {
+    throw new Error(`agentwiki: could not read skill file at ${path}: ${err}`);
+  }
   // Strip YAML frontmatter: drop everything through the closing --- line.
   const closing = raw.indexOf("\n---", raw.indexOf("---"));
   return closing === -1 ? raw : raw.slice(raw.indexOf("\n", closing + 1) + 1);
@@ -60,6 +65,10 @@ export function runHeadless(
   );
 
   return new Promise((resolve) => {
+    child.on("error", (err) => {
+      console.error(`agentwiki: failed to launch \`claude\`: ${err.message}`);
+      resolve(1);
+    });
     child.on("close", (code) => resolve(code ?? 1));
   });
 }
