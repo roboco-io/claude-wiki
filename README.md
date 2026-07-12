@@ -28,10 +28,10 @@ Then inside any repository:
 
 ### As a CLI
 
-> **Not yet published.** The `agentwiki` npm package and the `agentwiki@roboco-io` plugin marketplace entry are not live yet. Until then, install from source (`npm install && npm run build && npm link`) or run the plugin from a local checkout with `--plugin-dir`.
+> The npm package is published as `claude-wiki` (the name `agentwiki` was too similar to an existing package); the installed CLI command is still `agentwiki`. The `agentwiki@roboco-io` plugin marketplace entry is not live yet — run the plugin from a local checkout with `--plugin-dir` until then.
 
 ```sh
-npm install -g agentwiki
+npm install -g claude-wiki
 
 agentwiki init       # generate the initial wiki
 agentwiki update     # incrementally refresh the wiki

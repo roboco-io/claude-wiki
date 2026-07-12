@@ -1,5 +1,5 @@
 {
-  "name": "agentwiki",
+  "name": "claude-wiki",
   "version": "0.1.0",
   "description": "Generate and maintain agent-friendly codebase wikis using Claude Code — no API key required",
   "license": "MIT",

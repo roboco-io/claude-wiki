@@ -17,7 +17,7 @@ branch: main
 
 ## In Progress
 
-v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 22 유닛 테스트, 헤드리스 E2E(두 형식) + 인터랙티브 플러그인 E2E 검증 완료. npm publish + marketplace 등록만 남았다 (사용자 계정 필요).
+v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 22 유닛 테스트, 헤드리스 E2E(두 형식) + 인터랙티브 플러그인 E2E 검증 완료. npm 퍼블리시 완료: **`claude-wiki@0.1.0`** (2026-07-13, `agentwiki`는 기존 `agent-wiki`와 유사명이라 npm이 403 거부 → 사용자가 `claude-wiki` 선택; bin 명령은 `agentwiki` 유지). roboco-io 마켓플레이스 등록만 남았다.
 
 ## Completed Steps
 

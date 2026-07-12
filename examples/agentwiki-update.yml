@@ -28,7 +28,7 @@ jobs:
           node-version: 20
 
       - name: Install Claude Code and AgentWiki
-        run: npm install -g @anthropic-ai/claude-code agentwiki
+        run: npm install -g @anthropic-ai/claude-code claude-wiki
 
       - name: Update wiki
         env:
