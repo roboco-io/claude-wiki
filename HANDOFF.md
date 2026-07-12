@@ -17,7 +17,7 @@ branch: main
 
 ## In Progress
 
-v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 19+ 유닛 테스트, 헤드리스 E2E(두 형식) 검증 완료. npm publish + marketplace 등록 + 인터랙티브 플러그인 E2E만 남았다 (모두 사용자 계정/인터랙티브 세션 필요).
+v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 22 유닛 테스트, 헤드리스 E2E(두 형식) + 인터랙티브 플러그인 E2E 검증 완료. npm publish + marketplace 등록만 남았다 (사용자 계정 필요).
 
 ## Completed Steps
 
@@ -36,7 +36,7 @@ v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 
 
 ## Next Steps
 
-- [ ] **인터랙티브 플러그인 E2E** (사용자 수동 실행 필요): `claude --plugin-dir /Users/dohyunjung/Workspace/opensource/agentwiki` 세션에서 `/agentwiki:init` 실행 → 슬래시 메뉴에 명령이 나타나는지, 헤드리스 실행과 동일하게 `wiki/`가 생성되는지 확인. Task 7에서는 인터랙티브 세션을 서브에이전트가 구동할 수 없어 생략함.
+- [x] **인터랙티브 플러그인 E2E** (2026-07-12, tmux로 실제 인터랙티브 세션 구동): `claude --plugin-dir <repo>` 세션에서 `/agentwiki:` 자동완성에 `init`/`update` 표시 확인, `/agentwiki:init` 실행(~3분) → 소규모 대상 리포에 `wiki/index.md` + `agentwiki.json`(version 1, format llm-wiki, lastRunCommit=HEAD) 생성, `_plan.md` 없음, check-links `OK`, 소스 파일 무변경. 참고: acceptEdits 모드에서도 Bash(rg/git, rm/printf) 권한 프롬프트 2회 발생(정상 — acceptEdits는 파일 편집만 자동 승인).
 - [ ] npm 배포 (`npm publish`, 사용자 npm 계정 필요)
 - [ ] roboco-io 마켓플레이스 등록
 
@@ -59,4 +59,3 @@ v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 
 ## Resume Cautions
 
 - `gh repo create`는 이미 실행됨 — 재실행 금지.
-- 인터랙티브 플러그인 E2E(`claude --plugin-dir . ` → `/agentwiki:init`)는 아직 아무도 실행하지 않았다 — 다음 세션 또는 사용자가 수동으로 확인해야 한다.
