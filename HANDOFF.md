@@ -17,7 +17,7 @@ branch: main
 
 ## In Progress
 
-v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 22 유닛 테스트, 헤드리스 E2E(두 형식) + 인터랙티브 플러그인 E2E 검증 완료. npm 퍼블리시 완료: `claude-wiki@0.2.0`. (경위: 최초 이름 `agentwiki`는 기존 `agent-wiki`와 유사명이라 npm이 403 거부 → 패키지명을 `claude-wiki`로 변경해 0.1.0 퍼블리시 → 직후 사용자 결정으로 CLI bin·리포명·플러그인명·메타데이터 파일명까지 전부 `claude-wiki`로 통일하고 0.2.0 재퍼블리시, 0.1.0은 deprecate.) roboco-io 마켓플레이스 등록만 남았다.
+v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 22 유닛 테스트, 헤드리스 E2E(두 형식) + 인터랙티브 플러그인 E2E 검증 완료. npm 퍼블리시 완료: `claude-wiki@0.2.0`. (경위: 최초 이름 `agentwiki`는 기존 `agent-wiki`와 유사명이라 npm이 403 거부 → 패키지명을 `claude-wiki`로 변경해 0.1.0 퍼블리시 → 직후 사용자 결정으로 CLI bin·리포명·플러그인명·메타데이터 파일명까지 전부 `claude-wiki`로 통일하고 0.2.0 재퍼블리시, 0.1.0은 deprecate.) roboco-io 마켓플레이스 등록 완료(2026-07-13, roboco-io/plugins의 marketplace.json에 github 소스로 등록, `claude plugin install claude-wiki@roboco-plugins` 설치 검증 통과). 스코프 내 남은 작업 없음.
 
 ## Completed Steps
 
@@ -38,7 +38,7 @@ v0.1 구현 완료: SKILL.md, 명령 2개, `dist`-buildable CLI, 링크 체커, 
 
 - [x] **인터랙티브 플러그인 E2E** (2026-07-12, tmux로 실제 인터랙티브 세션 구동): `claude --plugin-dir <repo>` 세션에서 `/claude-wiki:` 자동완성에 `init`/`update` 표시 확인, `/claude-wiki:init` 실행(~3분) → 소규모 대상 리포에 `wiki/index.md` + `claude-wiki.json`(version 1, format llm-wiki, lastRunCommit=HEAD) 생성, `_plan.md` 없음, check-links `OK`, 소스 파일 무변경. 참고: acceptEdits 모드에서도 Bash(rg/git, rm/printf) 권한 프롬프트 2회 발생(정상 — acceptEdits는 파일 편집만 자동 승인).
 - [x] npm 배포: `claude-wiki@0.1.0` (2026-07-13). 격리 prefix 글로벌 설치 스모크 테스트 통과(`claude-wiki --help`, invalid format exit 2, 설치 레이아웃에서 SKILL.md 해석 정상)
-- [ ] roboco-io 마켓플레이스 등록
+- [x] roboco-io 마켓플레이스 등록
 
 ## Key Context
 

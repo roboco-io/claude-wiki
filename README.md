@@ -16,7 +16,8 @@ Anthropic's policy does not allow the Claude Agent SDK to use claude.ai subscrip
 ### As a Claude Code plugin
 
 ```
-/plugin install claude-wiki@roboco-io
+/plugin marketplace add roboco-io/plugins
+/plugin install claude-wiki@roboco-plugins
 ```
 
 Then inside any repository:
@@ -27,8 +28,6 @@ Then inside any repository:
 ```
 
 ### As a CLI
-
-> The `claude-wiki@roboco-io` plugin marketplace entry is not live yet — run the plugin from a local checkout with `--plugin-dir` until then.
 
 ```sh
 npm install -g claude-wiki
