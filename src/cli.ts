@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * agentwiki CLI — thin wrapper that drives the locally installed Claude Code
+ * claude-wiki CLI — thin wrapper that drives the locally installed Claude Code
  * CLI (`claude -p`) in headless mode. All wiki-generation logic lives in the
  * plugin's skill markdown so it runs under the user's Claude subscription;
  * this wrapper only handles argument parsing and process orchestration.
@@ -8,12 +8,12 @@
 import { parseArgs } from "./args.js";
 import { runHeadless } from "./headless.js";
 
-const HELP = `agentwiki — agent-friendly codebase wikis via Claude Code
+const HELP = `claude-wiki — agent-friendly codebase wikis via Claude Code
 
 Usage:
-  agentwiki init [--format llm-wiki|openwiki]   Generate the initial wiki
-  agentwiki update                              Incrementally refresh the wiki
-  agentwiki --help                              Show this help
+  claude-wiki init [--format llm-wiki|openwiki]   Generate the initial wiki
+  claude-wiki update                              Incrementally refresh the wiki
+  claude-wiki --help                              Show this help
 `;
 
 async function main(): Promise<void> {
@@ -24,7 +24,7 @@ async function main(): Promise<void> {
       console.log(HELP);
       break;
     case "error":
-      console.error(`agentwiki: ${parsed.message}`);
+      console.error(`claude-wiki: ${parsed.message}`);
       console.error(HELP);
       process.exit(2);
       break;

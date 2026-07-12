@@ -1,6 +1,6 @@
 {
   "name": "claude-wiki",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generate and maintain agent-friendly codebase wikis using Claude Code — no API key required",
   "license": "MIT",
   "type": "module",
@@ -8,7 +8,7 @@
     "node": ">=20"
   },
   "bin": {
-    "agentwiki": "./dist/cli.js"
+    "claude-wiki": "./dist/cli.js"
   },
   "files": [
     "dist",
@@ -31,7 +31,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/roboco-io/agentwiki.git"
+    "url": "git+https://github.com/roboco-io/claude-wiki.git"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

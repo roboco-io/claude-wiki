@@ -18,7 +18,7 @@ function skillBody(): string {
   try {
     raw = readFileSync(path, "utf8");
   } catch (err) {
-    throw new Error(`agentwiki: could not read skill file at ${path}: ${err}`);
+    throw new Error(`claude-wiki: could not read skill file at ${path}: ${err}`);
   }
   // Strip YAML frontmatter: drop everything through the closing --- line.
   const closing = raw.indexOf("\n---", raw.indexOf("---"));
@@ -45,7 +45,7 @@ export function runHeadless(
   const claude = findClaude();
   if (claude === null) {
     console.error(
-      "agentwiki: `claude` CLI not found.\n" +
+      "claude-wiki: `claude` CLI not found.\n" +
         "Install Claude Code (https://code.claude.com) and log in, or in CI set CLAUDE_CODE_OAUTH_TOKEN.",
     );
     return Promise.resolve(1);
@@ -66,7 +66,7 @@ export function runHeadless(
 
   return new Promise((resolve) => {
     child.on("error", (err) => {
-      console.error(`agentwiki: failed to launch \`claude\`: ${err.message}`);
+      console.error(`claude-wiki: failed to launch \`claude\`: ${err.message}`);
       resolve(1);
     });
     child.on("close", (code) => resolve(code ?? 1));

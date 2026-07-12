@@ -1,6 +1,6 @@
 ---
 name: wiki-generation
-description: Analyze a repository and generate or incrementally update an agent-friendly wiki. Used by /agentwiki:init and /agentwiki:update, or when the user asks to generate/refresh codebase documentation as a wiki.
+description: Analyze a repository and generate or incrementally update an agent-friendly wiki. Used by /claude-wiki:init and /claude-wiki:update, or when the user asks to generate/refresh codebase documentation as a wiki.
 ---
 
 # Wiki Generation
@@ -22,7 +22,7 @@ Format-dependent paths:
 | Entry page | `wiki/index.md` | `openwiki/quickstart.md` |
 | Layout | flat topic pages | section directories (`architecture/`, `operations/`, ...) |
 | Cross-links | `[[topic]]` wiki-links (Obsidian-compatible) | relative Markdown links |
-| Metadata | `wiki/agentwiki.json` | `openwiki/agentwiki.json` |
+| Metadata | `wiki/claude-wiki.json` | `openwiki/claude-wiki.json` |
 
 ## Run discipline
 
@@ -85,13 +85,13 @@ Format-dependent paths:
 
 ## Mode: init
 
-1. Preconditions: confirm the working directory is a git repository (`git rev-parse --is-inside-work-tree`). If `agentwiki.json` already exists in **either** `wiki/` or `openwiki/` (not just the chosen format's root), stop and tell the user to run `/agentwiki:update` instead (or delete the existing wiki root to force a rebuild).
+1. Preconditions: confirm the working directory is a git repository (`git rev-parse --is-inside-work-tree`). If `claude-wiki.json` already exists in **either** `wiki/` or `openwiki/` (not just the chosen format's root), stop and tell the user to run `/claude-wiki:update` instead (or delete the existing wiki root to force a rebuild).
 2. Build a repository inventory first: existing docs, entrypoints, package/config files, major domain folders, tests, data/schema files, operational scripts.
 3. Use git evidence to understand how important files and workflows came to be (recent commits, targeted blame/show on high-signal files).
 4. If the repository already has substantial docs, make the wiki an opinionated map and synthesis layer over them.
 5. Write the entry page first, then the linked section/topic pages. Use at most 8 pages unless the repository is clearly tiny (then use fewer).
 6. Do not try to document every source file. Cover the main architecture, workflows, domain concepts, data models, integrations, operations, tests, and extension points.
-7. Delete `_plan.md`, then write `<wiki-root>/agentwiki.json`:
+7. Delete `_plan.md`, then write `<wiki-root>/claude-wiki.json`:
 
    ```json
    {
@@ -106,7 +106,7 @@ Format-dependent paths:
 
 ## Mode: update
 
-1. Read `<wiki-root>/agentwiki.json`. Check `wiki/` first, then `openwiki/`; the metadata's `format` field wins over the directory name. **If no metadata file exists in either location, fall back to full init behavior** (using the existing wiki directory's format if one exists, else `llm-wiki`) and say you are doing so.
+1. Read `<wiki-root>/claude-wiki.json`. Check `wiki/` first, then `openwiki/`; the metadata's `format` field wins over the directory name. **If no metadata file exists in either location, fall back to full init behavior** (using the existing wiki directory's format if one exists, else `llm-wiki`) and say you are doing so.
 2. Scope the update: run `git diff --name-only <lastRunCommit>..HEAD` plus `git status --porcelain` for uncommitted changes. If `lastRunCommit` is unknown to git (e.g. shallow clone or history rewrite), say so and scope from the most recent ~20 commits instead.
 3. Build a docs impact plan in `_plan.md` before editing: source change → affected page → edit needed → why. If a page cannot be tied to a relevant change, do not edit it.
 4. Update runs are surgical. Preserve accurate structure and wording; prefer replacing one stale sentence over adding paragraphs. Only edit pages made inaccurate, incomplete, or misleading by the changes.
@@ -114,5 +114,5 @@ Format-dependent paths:
 6. Soft diff budget: if fewer than ~5 source files changed, edit at most 1-2 pages. Avoid touching the entry page unless top-level behavior, setup, or navigation changed. If you believe more than 3 pages need edits, re-examine the impact plan before proceeding.
 7. Add missing pages or remove obsolete claims only when the impact plan demands it; keep entry-page links accurate.
 8. **Updates may be a no-op.** If nothing relevant changed and the wiki is accurate, edit nothing and say the wiki is already current.
-9. Delete `_plan.md`, then rewrite `<wiki-root>/agentwiki.json` with the current HEAD and timestamp (even after a no-op, so future runs skip the same range).
+9. Delete `_plan.md`, then rewrite `<wiki-root>/claude-wiki.json` with the current HEAD and timestamp (even after a no-op, so future runs skip the same range).
 10. Final response: summarize which pages changed and why, or state that the wiki was already current.

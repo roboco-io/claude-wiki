@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Link-integrity checker for AgentWiki output.
+ * Link-integrity checker for Claude Wiki output.
  * - [[wiki-link]] targets must exist as <name>.md somewhere in the wiki dir.
  * - Relative markdown links (./foo.md, sub/dir/page.md) must resolve.
  * - llm-wiki format (index.md present): every page must be reachable

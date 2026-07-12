@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import { checkWiki } from "../scripts/check-links.mjs";
 
 function makeWiki(files: Record<string, string>): string {
-  const dir = mkdtempSync(join(tmpdir(), "agentwiki-test-"));
+  const dir = mkdtempSync(join(tmpdir(), "claude-wiki-test-"));
   for (const [name, content] of Object.entries(files)) {
     mkdirSync(join(dir, name, ".."), { recursive: true });
     writeFileSync(join(dir, name), content);

@@ -1,6 +1,6 @@
 # Implementation Guide
 
-Baseline knowledge and constraints for implementing AgentWiki. Read together with [DESIGN.md](./DESIGN.md).
+Baseline knowledge and constraints for implementing Claude Wiki. Read together with [DESIGN.md](./DESIGN.md).
 
 ## Hard constraints
 
@@ -14,11 +14,11 @@ Baseline knowledge and constraints for implementing AgentWiki. Read together wit
 
 | Path | Responsibility |
 |------|----------------|
-| `commands/init.md` | `/agentwiki:init` — format selection, delegate to skill, write metadata |
-| `commands/update.md` | `/agentwiki:update` — read metadata, diff-scope, delegate to skill |
+| `commands/init.md` | `/claude-wiki:init` — format selection, delegate to skill, write metadata |
+| `commands/update.md` | `/claude-wiki:update` — read metadata, diff-scope, delegate to skill |
 | `skills/wiki-generation/SKILL.md` | The core workflow: discovery discipline, page structure, both output formats, init/update modes |
-| `src/cli.ts` | `agentwiki init|update` → spawn `claude -p "/agentwiki:<cmd> ..."` |
-| `examples/agentwiki-update.yml` | GitHub Actions template |
+| `src/cli.ts` | `claude-wiki init|update` → spawn `claude -p "/claude-wiki:<cmd> ..."` |
+| `examples/claude-wiki-update.yml` | GitHub Actions template |
 
 ## Output format specs
 
@@ -48,7 +48,7 @@ openwiki/
 - Mirrors the layout produced by [OpenWiki](https://github.com/langchain-ai/openwiki) so existing repos can migrate seamlessly.
 - Optionally maintain the `<!-- OPENWIKI:START/END -->` marker block in the repo's `CLAUDE.md`.
 
-## Metadata file: `agentwiki.json`
+## Metadata file: `claude-wiki.json`
 
 Written at the wiki root after every successful run; drives incremental updates.
 
@@ -77,7 +77,7 @@ Encode these rules in `skills/wiki-generation/SKILL.md` — they come from `open
 Sketch (verify flags against current Claude Code docs before implementing):
 
 ```sh
-claude -p "/agentwiki:update" \
+claude -p "/claude-wiki:update" \
   --permission-mode acceptEdits \
   --output-format stream-json
 ```
@@ -90,10 +90,10 @@ claude -p "/agentwiki:update" \
 
 ## Testing
 
-- **Unit (vitest)**: CLI arg parsing, precondition checks (claude binary detection), `agentwiki.json` read/write/fallback logic.
-- **E2E (manual first)**: run `/agentwiki:init` on a small real repo in both formats; verify link integrity (`[[link]]` targets exist, index covers all pages). Automate link-integrity checks later as a plain Node script — no LLM needed.
+- **Unit (vitest)**: CLI arg parsing, precondition checks (claude binary detection), `claude-wiki.json` read/write/fallback logic.
+- **E2E (manual first)**: run `/claude-wiki:init` on a small real repo in both formats; verify link integrity (`[[link]]` targets exist, index covers all pages). Automate link-integrity checks later as a plain Node script — no LLM needed.
 
 ## Publishing
 
-- **npm**: `agentwiki` package (`files` already includes `dist` + plugin dirs).
+- **npm**: `claude-wiki` package (`files` already includes `dist` + plugin dirs).
 - **Plugin marketplace**: repo root is an installable plugin (`.claude-plugin/plugin.json`). To distribute via `roboco-io` marketplace, add this repo to the org's marketplace.json (see `roboco-io/tools/plugins` if it exists).

@@ -1,13 +1,13 @@
 {
-  "name": "agentwiki",
-  "version": "0.1.0",
-  "description": "Generate and maintain agent-friendly codebase wikis — /agentwiki:init to create, /agentwiki:update to refresh",
+  "name": "claude-wiki",
+  "version": "0.2.0",
+  "description": "Generate and maintain agent-friendly codebase wikis — /claude-wiki:init to create, /claude-wiki:update to refresh",
   "author": {
     "name": "roboco-io",
     "url": "https://github.com/roboco-io"
   },
-  "homepage": "https://github.com/roboco-io/agentwiki",
-  "repository": "https://github.com/roboco-io/agentwiki",
+  "homepage": "https://github.com/roboco-io/claude-wiki",
+  "repository": "https://github.com/roboco-io/claude-wiki",
   "license": "MIT",
   "keywords": ["documentation", "wiki", "agents"]
 }
