@@ -36,7 +36,7 @@ LLM-free validator for generated wikis. Checks three things: every `[[wiki-link]
 
 Two distribution channels, both from this single repo:
 
-1. **npm** — package `claude-wiki`, bin `claude-wiki` → `dist/cli.js`. The `files` field ships `dist` *plus* the plugin dirs (`commands`, `skills`, `agents`, `scripts`, `.claude-plugin`) because the CLI reads `skills/wiki-generation/SKILL.md` at runtime from the installed package (see [[architecture]] on prompt inlining). Current: 0.2.0; 0.1.0 is deprecated (rebrand from `agentwiki` — the original name was rejected by npm as too similar to an existing package).
+1. **npm** — package `claude-wiki`, bin `claude-wiki` → `dist/cli.js`. The `files` field ships `dist` *plus* the plugin dirs (`commands`, `skills`, `agents`, `scripts`, `.claude-plugin`) because the CLI reads `skills/wiki-generation/SKILL.md` at runtime from the installed package (see [[architecture]] on prompt inlining). Current: 0.3.0; 0.1.0 is deprecated (rebrand from `agentwiki` — the original name was rejected by npm as too similar to an existing package).
 2. **Plugin marketplace** — registered in `roboco-io/plugins` marketplace.json as a github source (2026-07-13). Install: `/plugin marketplace add roboco-io/plugins` then `/plugin install claude-wiki@roboco-plugins`.
 
 ## CI
