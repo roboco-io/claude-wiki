@@ -25,7 +25,7 @@ Three vitest suites under `test/`:
 - `headless.test.ts` — `buildPrompt()` (skill frontmatter stripping, mode instruction) and package-root resolution.
 - `check-links.test.ts` — link checker behavior, including the regression tests for ignoring code spans and fenced blocks (commit `03dfadd`).
 
-E2E is manual (see `HANDOFF.md` for the verified procedure): run `node dist/cli.js init` against a small repo for both formats, verify the generated tree, run `check-links.mjs` on it, confirm `update` no-ops on an unchanged repo. Interactive plugin E2E uses `claude --plugin-dir <repo>` in a real session.
+E2E is automated locally via `npm run test:e2e` (`scripts/e2e.mjs` — spends real Claude subscription tokens; when to run it is codified in `.claude/skills/verify/SKILL.md`). It is deliberately excluded from `npm test` and CI. Interactive plugin E2E still uses `claude --plugin-dir <repo>` in a real session.
 
 ## The link checker: `scripts/check-links.mjs`
 
