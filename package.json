@@ -41,6 +41,7 @@
     "lint": "eslint .",
     "prebuild": "npm run clean",
     "test": "vitest run",
+    "test:e2e": "node scripts/e2e.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {
