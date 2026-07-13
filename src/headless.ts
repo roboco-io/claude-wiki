@@ -18,7 +18,9 @@ function skillBody(): string {
   try {
     raw = readFileSync(path, "utf8");
   } catch (err) {
-    throw new Error(`claude-wiki: could not read skill file at ${path}: ${err}`);
+    throw new Error(`claude-wiki: could not read skill file at ${path}: ${err}`, {
+      cause: err,
+    });
   }
   // Strip YAML frontmatter: drop everything through the closing --- line.
   const closing = raw.indexOf("\n---", raw.indexOf("---"));
