@@ -35,5 +35,5 @@ The core design principle (`docs/IMPLEMENTATION.md:11`): **all wiki-generation i
 
 - **Never** introduce direct Anthropic API or Agent SDK calls — this violates the project's founding constraint (`docs/IMPLEMENTATION.md` "Hard constraints").
 - Behavior changes to wiki generation go in `skills/wiki-generation/SKILL.md`, not in `src/`.
-- The npm package name history: originally `agentwiki`, renamed to `claude-wiki` at 0.1.0 (npm 403 on similar name) then fully rebranded at 0.2.0 (commit `80c506d`). `HANDOFF.md` records the v0.1 completion state.
+- The npm package name history: originally `agentwiki`, renamed to `claude-wiki` at 0.1.0 (npm 403 on similar name) then fully rebranded at 0.2.0 (commit `80c506d`).
 - Project docs: `docs/DESIGN.md` (architecture decision record), `docs/IMPLEMENTATION.md` (constraints and specs). Both predate implementation; where they conflict with source, source wins — e.g. DESIGN.md's status line still says "implementation pending", which is stale.
