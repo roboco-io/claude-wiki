@@ -23,6 +23,7 @@ The core design principle (`docs/IMPLEMENTATION.md:11`): **all wiki-generation i
 - `commands/init.md`, `commands/update.md` — thin delegates that parse the format flag and invoke the skill.
 - `src/` (3 files, ~180 lines total) — CLI wrapper only: argument parsing, `claude` binary detection, spawning `claude -p` with the skill body inlined as the prompt.
 - `scripts/check-links.mjs` — LLM-free link-integrity checker for generated wikis.
+- `scripts/e2e.mjs` — local-only E2E harness (`npm run test:e2e`); spawns real `claude -p` runs, so it costs tokens and stays out of CI.
 - `agents/` — empty placeholder for future specialized subagents.
 
 ## Reading order
