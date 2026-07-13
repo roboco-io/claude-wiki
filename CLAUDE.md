@@ -16,9 +16,10 @@ npm run typecheck    # tsc --noEmit
 npm run lint         # eslint .
 npm run dev          # run the CLI from source (tsx src/cli.ts)
 npm run check-links  # validate a generated wiki: node scripts/check-links.mjs <wiki-dir>
+npm run test:e2e     # local-only E2E (real claude -p runs — costs tokens; see .claude/skills/verify/SKILL.md)
 ```
 
-The full gate is build + typecheck + lint + test. E2E is manual: run `node dist/cli.js init` against a small repo, verify output with `check-links.mjs` (procedure in HANDOFF.md).
+The full gate is build + typecheck + lint + test. Verification procedure (fast gate vs. token-spending E2E gate) is codified in `.claude/skills/verify/SKILL.md`.
 
 ## Hard constraints (do not violate)
 
