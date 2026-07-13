@@ -10,11 +10,12 @@ Node ≥ 20, ESM, TypeScript, zero runtime dependencies (dev-only: typescript, t
 npm run build        # tsc → dist/ (prebuild cleans dist)
 npm test             # vitest run (22 unit tests)
 npm run typecheck    # tsc --noEmit
+npm run lint         # eslint .
 npm run dev          # tsx src/cli.ts (run CLI without building)
 npm run check-links  # node scripts/check-links.mjs <wiki-dir>
 ```
 
-Note: `package.json` declares `npm run lint` → `eslint .`, but eslint is not in devDependencies and no eslint config exists in the repo — treat build + typecheck + test as the real gate.
+Lint uses eslint 9 + typescript-eslint flat config (`eslint.config.mjs`); the full gate is build + typecheck + lint + test.
 
 ## Tests
 
