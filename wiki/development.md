@@ -15,7 +15,7 @@ npm run dev          # tsx src/cli.ts (run CLI without building)
 npm run check-links  # node scripts/check-links.mjs <wiki-dir>
 ```
 
-Lint uses eslint 9 + typescript-eslint flat config (`eslint.config.mjs`); the full gate is build + typecheck + lint + test.
+Lint uses eslint 10 + typescript-eslint flat config (`eslint.config.mjs`); the full gate is build + typecheck + lint + test.
 
 ## Tests
 
