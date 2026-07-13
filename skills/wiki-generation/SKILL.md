@@ -82,6 +82,7 @@ Format-dependent paths:
 - `openwiki` format only: do not create a section directory unless it represents a real documentation area that will hold multiple substantive pages; prefer headings inside broader pages first.
 - `llm-wiki` format only: keep pages flat in `wiki/` with kebab-case filenames (`build-pipeline.md`). A `[[wiki-link]]` target is the filename without `.md`. Every page must be linked from `index.md`, and every page should link to its related pages — no orphans.
 - Before finishing any run, review the wiki tree; merge or remove low-value pages and stub directories.
+- Coverage self-check: before finishing any run, every identified area must be either documented or backlogged. Keep deferred areas in a concise `## Backlog` section at the end of the entry page — do not create a separate backlog page. Each entry records the area name, a source anchor (`path/to/dir` or file), and a one-line reason it was deferred.
 
 ## Mode: init
 
@@ -89,7 +90,7 @@ Format-dependent paths:
 2. Build a repository inventory first: existing docs, entrypoints, package/config files, major domain folders, tests, data/schema files, operational scripts.
 3. Use git evidence to understand how important files and workflows came to be (recent commits, targeted blame/show on high-signal files).
 4. If the repository already has substantial docs, make the wiki an opinionated map and synthesis layer over them.
-5. Write the entry page first, then the linked section/topic pages. Use at most 8 pages unless the repository is clearly tiny (then use fewer).
+5. Write the entry page first, then the linked section/topic pages. Use at most 8 pages unless the repository is clearly tiny (then use fewer). Do not silently drop a real domain or workflow because of the page budget — record it in the entry page's `## Backlog` section instead.
 6. Do not try to document every source file. Cover the main architecture, workflows, domain concepts, data models, integrations, operations, tests, and extension points.
 7. Delete `_plan.md`, then write `<wiki-root>/claude-wiki.json`:
 
@@ -108,11 +109,12 @@ Format-dependent paths:
 
 1. Read `<wiki-root>/claude-wiki.json`. Check `wiki/` first, then `openwiki/`; the metadata's `format` field wins over the directory name. **If no metadata file exists in either location, fall back to full init behavior** (using the existing wiki directory's format if one exists, else `llm-wiki`) and say you are doing so.
 2. Scope the update: run `git diff --name-only <lastRunCommit>..HEAD` plus `git status --porcelain` for uncommitted changes. If `lastRunCommit` is unknown to git (e.g. shallow clone or history rewrite), say so and scope from the most recent ~20 commits instead.
-3. Build a docs impact plan in `_plan.md` before editing: source change → affected page → edit needed → why. If a page cannot be tied to a relevant change, do not edit it.
+3. Read the existing `## Backlog` section in the entry page first, if present. Then build a docs impact plan in `_plan.md` before editing: source change → affected page → edit needed → why. If a page cannot be tied to a relevant change, do not edit it.
 4. Update runs are surgical. Preserve accurate structure and wording; prefer replacing one stale sentence over adding paragraphs. Only edit pages made inaccurate, incomplete, or misleading by the changes.
 5. No formatting-only edits: do not reformat tables, normalize whitespace, reorder lists, or polish wording unless the surrounding content is already being corrected.
 6. Soft diff budget: if fewer than ~5 source files changed, edit at most 1-2 pages. Avoid touching the entry page unless top-level behavior, setup, or navigation changed. If you believe more than 3 pages need edits, re-examine the impact plan before proceeding.
 7. Add missing pages or remove obsolete claims only when the impact plan demands it; keep entry-page links accurate.
-8. **Updates may be a no-op.** If nothing relevant changed and the wiki is accurate, edit nothing and say the wiki is already current.
-9. Delete `_plan.md`, then rewrite `<wiki-root>/claude-wiki.json` with the current HEAD and timestamp (even after a no-op, so future runs skip the same range).
-10. Final response: summarize which pages changed and why, or state that the wiki was already current.
+8. Promote a backlog entry when the diff touches that area or the update has spare documentation budget: document the area, then remove the entry. Do not let the backlog grow silently — every identified area must remain either documented or represented by a concise backlog entry with a source anchor and reason.
+9. **Updates may be a no-op.** If nothing relevant changed and the wiki is accurate, edit nothing and say the wiki is already current.
+10. Delete `_plan.md`, then rewrite `<wiki-root>/claude-wiki.json` with the current HEAD and timestamp (even after a no-op, so future runs skip the same range).
+11. Final response: summarize which pages changed and why, or state that the wiki was already current.
